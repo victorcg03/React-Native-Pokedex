@@ -12,9 +12,6 @@ export default function Layout() {
             headerTintColor: "black",
             headerStyle: {
               backgroundColor: "#f3f3f3",
-              elevation: 0,
-              shadowOpacity: 0,
-              borderBottomWidth: 0,
             },
           }}
         />
