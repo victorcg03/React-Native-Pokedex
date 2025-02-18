@@ -1,76 +1,84 @@
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, Pressable } from "react-native";
+import { Link } from "expo-router";
 export function Pokemon({ pokemon }) {
   const src = pokemon.sprites.other["official-artwork"].front_default;
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: "lightgray",
-      }}
-    >
-      <Image
-        source={{
-          uri:
-            src ??
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAAja6c9Ip37JMYpOmIIe9JGv16LvccS2OoCpr2Evz5Gv2-ImNwePvBoxNWctyWlJwYmA&usqp=CAU",
-        }}
-        style={{ width: 100, height: 100 }}
-      />
-      <View style={{ marginLeft: 10, gap: 10, flex: 1 }}>
-        <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-          <Text style={{ fontWeight: 800, fontSize: 16 }}>
-            {" "}
-            #{pokemon.id.toString().padStart(3, "0")}
-          </Text>
-          <Text style={{ textTransform: "uppercase", fontWeight: "700" }}>
-            {pokemon.name}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row", gap: 10 }}>
-          {pokemon.types.map(({ type }) => (
+    <Link href={`/${pokemon.id}`} asChild>
+      <Pressable>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 10,
+            borderBottomWidth: 1,
+            borderBottomColor: "lightgray",
+          }}
+        >
+          <Image
+            source={{
+              uri:
+                src ??
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAAja6c9Ip37JMYpOmIIe9JGv16LvccS2OoCpr2Evz5Gv2-ImNwePvBoxNWctyWlJwYmA&usqp=CAU",
+            }}
+            style={{ width: 100, height: 100 }}
+          />
+          <View style={{ marginLeft: 10, gap: 10, flex: 1 }}>
             <View
-              style={[styles.type, styles[type.name] || styles.defaultType]}
-              key={type.name}
+              style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
             >
-              <Text
-                style={{
-                  color: styles[type.name]?.color || styles.defaultType.color,
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                }}
-              >
-                {type.name}
+              <Text style={{ fontWeight: 800, fontSize: 16 }}>
+                {" "}
+                #{pokemon.id.toString().padStart(3, "0")}
+              </Text>
+              <Text style={{ textTransform: "uppercase", fontWeight: "700" }}>
+                {pokemon.name}
               </Text>
             </View>
-          ))}
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              {pokemon.types.map(({ type }) => (
+                <View
+                  style={[styles.type, styles[type.name] || styles.defaultType]}
+                  key={type.name}
+                >
+                  <Text
+                    style={{
+                      color:
+                        styles[type.name]?.color || styles.defaultType.color,
+                      fontWeight: "bold",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {type.name}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", gap: 10 }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                padding: 5,
+                backgroundColor: "#ddd",
+                borderRadius: 5,
+              }}
+            >
+              {pokemon.height / 10}M
+            </Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                padding: 5,
+                backgroundColor: "#ddd",
+                borderRadius: 5,
+              }}
+            >
+              {pokemon.weight / 10}KG
+            </Text>
+          </View>
         </View>
-      </View>
-      <View style={{ flex: 1, alignItems: "center", gap: 10 }}>
-        <Text
-          style={{
-            fontWeight: "bold",
-            padding: 5,
-            backgroundColor: "#ddd",
-            borderRadius: 5,
-          }}
-        >
-          {pokemon.height / 10}M
-        </Text>
-        <Text
-          style={{
-            fontWeight: "bold",
-            padding: 5,
-            backgroundColor: "#ddd",
-            borderRadius: 5,
-          }}
-        >
-          {pokemon.weight / 10}KG
-        </Text>
-      </View>
-    </View>
+      </Pressable>
+    </Link>
   );
 }
 const styles = StyleSheet.create({
